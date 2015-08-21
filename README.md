@@ -26,9 +26,9 @@ As a maven dependency:
 ##Create Your Database
 When creating your database, you have to follow these simple naming rules for your table and column names:
 
-	1. The primary key name must be either "id" or "<table name>Id.
-	1. Use pascal case for table names.
-	1. Use camel case for column names.
+1. The primary key name must be either "id" or "<table name>Id.
+1. Use pascal case for table names.
+1. Use camel case for column names.
 
 
 Table Example Derby syntax
