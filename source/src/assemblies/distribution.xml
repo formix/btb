@@ -1,0 +1,36 @@
+<assembly>
+	<id>full</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<files>
+		<file>
+			<source>bridge-release.xml</source>
+			<destName>bridge.xml</destName>
+		</file>
+	</files>
+
+	<fileSets>
+		<fileSet>
+			<directory></directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.txt</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory></outputDirectory>
+			<outputFileNameMapping>
+				${artifact.artifactId}-${artifact.version}${dashClassifier?}.${artifact.extension}
+			</outputFileNameMapping>
+			<unpack>false</unpack>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets>
+
+</assembly>

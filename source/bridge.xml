@@ -1,0 +1,9 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>BridgeToBabylon connection strings</comment>
+	<entry key="database.url">jdbc:derby:data/testdb</entry>
+    <entry key="database.url.derbycreate">jdbc:derby:data/testdb;create=true</entry>
+	<entry key="database.url.derbyShutdown">jdbc:derby:data/testdb;shutdown=true</entry>
+	<entry key="database.url.mysql"></entry>
+	<entry key="database.default"></entry>
+</properties>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.formix</groupId>
+	<artifactId>btb</artifactId>
+	<packaging>jar</packaging>
+	<name>Bridge to Babylon</name>
+	<version>1.3.2</version>
+	<url>http://btb.sourceforge.net/</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Apache 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>
+            scm:svn:svn://svn.code.sf.net/p/btb/code/trunk/BridgeToBabylon
+        </connection>
+		<developerConnection>
+            scm:svn:svn://svn.code.sf.net/p/btb/code/trunk/BridgeToBabylon
+        </developerConnection>
+		<tag>HEAD</tag>
+		<url>http://btb.svn.sourceforge.net/svnroot/btb/trunk/BridgeToBabylon</url>
+	</scm>
+
+	<description>
+        Bridge to Babylon is a lightweight object relational mapper. The
+        main goal of this library is simplicity. It is intended to be
+        used with POJOs without the need of external XML mapping
+        definition or any kind of annotation. This approache makes
+        Bridge to Babylon the best compromize between simplicity (no xml
+        mapping) and light library footprint: You don't use annotations
+        so you don't have to deploy Bridge to Babylon along with your
+        jars on remote clients.
+    </description>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.8.2.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+<!-- 	<distributionManagement> -->
+<!-- 		<repository> -->
+<!-- 			<id>btb</id> -->
+<!-- 			<name>Sourceforge Repository</name> -->
+<!-- 			<uniqueVersion>false</uniqueVersion> -->
+<!-- 			<layout>default</layout> -->
+<!-- 			<url> -->
+<!--                 scp://shell.sourceforge.net/home/groups/b/bt/btb/htdocs/m2repo -->
+<!--             </url> -->
+<!-- 		</repository> -->
+<!-- 		<site> -->
+<!-- 			<id>btb</id> -->
+<!-- 			<name>Bridge to Babylon Website</name> -->
+<!-- 			<url> -->
+<!--                 scp://shell.sourceforge.net/home/project-web/btb/htdocs -->
+<!--             </url> -->
+<!-- 		</site> -->
+<!-- 	</distributionManagement> -->
+
+	<issueManagement>
+		<system>Sourceforge Tracker</system>
+		<url>http://sourceforge.net/tracker/?group_id=209935</url>
+	</issueManagement>
+
+	<mailingLists>
+		<mailingList>
+			<name>General informations</name>
+			<post>btb-info@lists.sourceforge.net</post>
+			<archive>
+                http://sourceforge.net/mailarchive/forum.php?forum_name=btb-info
+            </archive>
+		</mailingList>
+	</mailingLists>
+
+	<developers>
+		<developer>
+			<id>001</id>
+			<name>Jean-Philippe Gravel, p. eng.</name>
+			<email>jpgravel@ieee.org</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>Project Manager</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>
+							src/assemblies/distribution.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<locales>en</locales>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.16</version>
+				<configuration>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.6.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<keyname>CA4E49BA</keyname>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<artifactId>
+                    maven-project-info-reports-plugin
+                </artifactId>
+                <version>2.7</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>dependencies</report>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+							<report>scm</report>
+							<report>summary</report>
+							<!-- <report>cim</report> -->
+							<report>index</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc</report>
+							<!-- <report>test-javadoc</report> -->
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+
+		</plugins>
+	</reporting>
+
+
+
+</project>
+

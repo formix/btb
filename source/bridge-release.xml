@@ -1,0 +1,25 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>BridgeToBabylon connection strings</comment>
+	
+	<!-- This is the only required key. -->
+	<entry key="database.url"></entry>
+	
+	<!--
+	  You can add as many database url entries as you want using this format:
+	    <entry key="database.url.<anything.you.want>">...</entry>
+	-->
+	<entry key="database.url.mysql"></entry>
+
+	<!-- 
+	  If the database.default key is omitted or empty, default to 
+	  database.url otherwise, enter the url name here.
+	  
+	  Example to set the default database to database.url.mysql:
+		<entry key="database.default">mysql</entry>  
+	   
+	-->
+	<entry key="database.default"></entry>
+	
+	
+</properties>

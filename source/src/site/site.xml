@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Bridge To Babylon">
+
+	<body>
+		<menu name="Bridge to Babylon">
+		    <item name="Home" href="/" />
+		    <item name="Usage" href="Usage.html" />
+		    <item name="Pom.xml" href="Pom.html" />
+			<item name="Download" href="http://sourceforge.net/project/showfiles.php?group_id=209935" />
+			<item name="Sourceforge Project" href="http://sourceforge.net/projects/btb/" />
+		</menu>
+		<menu ref="reports" />
+	</body>
+
+	<poweredBy>
+		<logo name="SourceForge.net" href="http://sourceforge.net/projects/btb"
+			img="http://sflogo.sourceforge.net/sflogo.php?group_id=209935&amp;type=1" />
+		<logo name="Maven" href="http://maven.apache.org/"
+			img="http://maven.apache.org/images/logos/maven-feather.png" />
+        <logo name="Support this project" href="http://sourceforge.net/donate/index.php?group_id=209935"
+            img="http://images.sourceforge.net/images/project-support.jpg" />
+            
+	</poweredBy>
+
+	<publishDate position="navigation-bottom" format="MM-dd-yy" />
+
+
+</project>

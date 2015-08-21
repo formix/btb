@@ -1,0 +1,19 @@
+                                    ------
+                                Maven dependency
+                                    ------
+                           Jean-Philippe Gravel, eng.
+                                    ------
+                                   2013-09-07
+
+Maven reference
+
+  In order to include Bridge to Babylon in your Maven project, add the 
+  following dependency:
+
++-------------------------------------
+  <dependency>
+	<groupId>net.sf.btb</groupId>
+	<artifactId>bridge</artifactId>
+	<version>1.3.1</version>
+  </dependency>
++-------------------------------------
