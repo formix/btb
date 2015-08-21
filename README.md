@@ -9,7 +9,7 @@ mapping) and light library footprint: You don't use annotations
 so you don't have to deploy Bridge to Babylon along your
 entities' jar on remote clients.
 
-**Moved from SourceForge**
+**Moved from [SourceForge](https://sourceforge.net/projects/btb/)**
 
 ##Installation
 As a maven dependency:
