@@ -9,4 +9,17 @@ mapping) and light library footprint: You don't use annotations
 so you don't have to deploy Bridge to Babylon along your
 entities' jar on remote clients.
 
-Moved from SourceForge
+**Moved from SourceForge**
+
+#Installation
+As a maven dependency:
+```xml
+<dependencies>
+  <!-- ... -->
+  <dependency>
+	  <groupId>org.formix</groupId>
+	  <artifactId>btb</artifactId>
+	  <version>1.3.2</version>
+  </dependency>
+</dependencies>
+```
