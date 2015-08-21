@@ -8,3 +8,5 @@ Bridge to Babylon the best compromize between simplicity (no xml
 mapping) and light library footprint: You don't use annotations
 so you don't have to deploy Bridge to Babylon along your
 entities' jar on remote clients.
+
+Moved from SourceForge
