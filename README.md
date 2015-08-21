@@ -30,7 +30,7 @@ When creating your database, you have to follow these simple naming rules for yo
 2. Use pascal case for table names.
 3. Use camel case for column names.
 
-Table Example (Derby syntax):
+Table Example Derby syntax
 ```sql
 CREATE TABLE Employee (
   id           INT         NOT NULL GENERATED ALWAYS AS IDENTITY,
