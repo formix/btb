@@ -24,13 +24,13 @@
 
 	<scm>
 		<connection>
-            scm:svn:svn://svn.code.sf.net/p/btb/code/trunk/BridgeToBabylon
+            scm:git:https://github.com/formix/btb.git
         </connection>
 		<developerConnection>
-            scm:svn:svn://svn.code.sf.net/p/btb/code/trunk/BridgeToBabylon
+            scm:git:https://github.com/formix/btb.git
         </developerConnection>
 		<tag>HEAD</tag>
-		<url>http://btb.svn.sourceforge.net/svnroot/btb/trunk/BridgeToBabylon</url>
+		<url>https://github.com/formix/btb</url>
 	</scm>
 
 	<description>
@@ -59,25 +59,6 @@
 		</dependency>
 	</dependencies>
 
-<!-- 	<distributionManagement> -->
-<!-- 		<repository> -->
-<!-- 			<id>btb</id> -->
-<!-- 			<name>Sourceforge Repository</name> -->
-<!-- 			<uniqueVersion>false</uniqueVersion> -->
-<!-- 			<layout>default</layout> -->
-<!-- 			<url> -->
-<!--                 scp://shell.sourceforge.net/home/groups/b/bt/btb/htdocs/m2repo -->
-<!--             </url> -->
-<!-- 		</repository> -->
-<!-- 		<site> -->
-<!-- 			<id>btb</id> -->
-<!-- 			<name>Bridge to Babylon Website</name> -->
-<!-- 			<url> -->
-<!--                 scp://shell.sourceforge.net/home/project-web/btb/htdocs -->
-<!--             </url> -->
-<!-- 		</site> -->
-<!-- 	</distributionManagement> -->
-
 	<issueManagement>
 		<system>Sourceforge Tracker</system>
 		<url>http://sourceforge.net/tracker/?group_id=209935</url>
@@ -97,10 +78,10 @@
 		<developer>
 			<id>001</id>
 			<name>Jean-Philippe Gravel, p. eng.</name>
-			<email>jpgravel@ieee.org</email>
+			<email>jpg@formix.org</email>
 			<timezone>-5</timezone>
 			<roles>
-				<role>Project Manager</role>
+				<role>Project Lead</role>
 			</roles>
 		</developer>
 	</developers>
@@ -121,7 +102,7 @@
 
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.4</version>
 				<configuration>
 					<locales>en</locales>
 				</configuration>
