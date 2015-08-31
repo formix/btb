@@ -29,7 +29,6 @@ import java.util.Properties;
  * possible to define more than one database URL in the file or to load
  * connection attributes from another file.
  * </p>
- * <p>
  * <ul>
  * <li><b>database.url=<i>connection string</i></b> Defines the default
  * connection string. The attribute is required for the connection manager to
@@ -41,7 +40,6 @@ import java.util.Properties;
  * string to be used by default, specify it's name with this attribute. Note
  * that the <i>database.url.</i> part is omitted.</li>
  * </ul>
- * </p>
  * <p>
  * You can change the path of the database.properties file by setting the system
  * property attribute "databases.properties.path" to the desired file path.
@@ -263,7 +261,7 @@ public class ConnectionManager {
 	/**
 	 * Gets the default database URL (the database.url.{name} value).
 	 * 
-	 * @return a <code>String<code> containing the database URL.
+	 * @return a <code>String</code> containing the database URL.
 	 */
 	public String getUrl() {
 		return getUrl("");

@@ -61,9 +61,8 @@ public class Query<I> {
 	protected Query(Connection connection, SqlDescriptor descriptor) {
 		Util.throwIfNull(descriptor, "descriptor");
 		this.descriptor = descriptor;
-		initialize(descriptor.getSelectQuery(),
-				(Class<I>) descriptor.getType(),
-				(Class<I>) descriptor.getType(), connection);
+		initialize(descriptor.getSelectQuery(), (Class<I>) descriptor.getType(), (Class<I>) descriptor.getType(),
+				connection);
 	}
 
 	/**
@@ -102,8 +101,7 @@ public class Query<I> {
 	 * @param instanciationType
 	 *            The class type to be used for instantiations operations.
 	 */
-	public Query(String string, Class<I> assignationType,
-			Class<I> instanciationType) {
+	public Query(String string, Class<I> assignationType, Class<I> instanciationType) {
 		Util.throwIfNullOrEmpty(string, "string");
 		Util.throwIfNull(assignationType, "assignationType");
 		Util.throwIfNull(instanciationType, "instanciationType");
@@ -122,16 +120,15 @@ public class Query<I> {
 	 * @param instanciationType
 	 *            The class type to be used for instantiations operations.
 	 */
-	public Query(Connection connection, String string,
-			Class<I> assignationType, Class<I> instanciationType) {
+	public Query(Connection connection, String string, Class<I> assignationType, Class<I> instanciationType) {
 		Util.throwIfNullOrEmpty(string, "string");
 		Util.throwIfNull(assignationType, "assignationType");
 		Util.throwIfNull(instanciationType, "instanciationType");
 		initialize(string, assignationType, instanciationType, connection);
 	}
 
-	private void initialize(String string, Class<I> assignationType,
-			Class<I> instanciationType, Connection connection) {
+	private void initialize(String string, Class<I> assignationType, Class<I> instanciationType,
+			Connection connection) {
 		Util.throwIfNullOrEmpty(string, "string");
 		Util.throwIfNull(assignationType, "assignationType");
 		Util.throwIfNull(instanciationType, "instanciationType");
@@ -352,9 +349,9 @@ public class Query<I> {
 	 * Execute the query and returns the resulting object list.
 	 * 
 	 * @return the list containing the result of the query.
+	 * 
 	 * @throws SQLException
 	 *             if an error occurs during the query execution.
-	 * @throws BrokenRuleException
 	 */
 	public List<I> execute() throws SQLException {
 		ArrayList<I> list = new ArrayList<I>();
@@ -368,9 +365,9 @@ public class Query<I> {
 	 * 
 	 * @param col
 	 *            the collection to be filled.
+	 * 
 	 * @throws SQLException
 	 *             if an error occurs during the query execution.
-	 * @throws BrokenRuleException
 	 */
 	public void executeFill(Collection<? super I> col) throws SQLException {
 		Util.throwIfNull(col, "col");
@@ -401,8 +398,7 @@ public class Query<I> {
 		}
 	}
 
-	private void createDataColumns(ResultSetMetaData metaData)
-			throws SQLException {
+	private void createDataColumns(ResultSetMetaData metaData) throws SQLException {
 		this.dataColumns = new HashMap<String, String>();
 		for (int col = 1; col <= metaData.getColumnCount(); col++) {
 			String colLabel = metaData.getColumnLabel(col);
@@ -410,8 +406,7 @@ public class Query<I> {
 		}
 	}
 
-	private String buildSelectQuery(String beginsWith, Filter filter,
-			String orderBy) {
+	private String buildSelectQuery(String beginsWith, Filter filter, String orderBy) {
 		String query = beginsWith;
 		if (this.joins.size() > 0) {
 			for (Join join : this.joins) {
@@ -427,8 +422,7 @@ public class Query<I> {
 		return query;
 	}
 
-	private void setParameters(PreparedStatement stmt, Filter filter)
-			throws SQLException {
+	private void setParameters(PreparedStatement stmt, Filter filter) throws SQLException {
 
 		if (filter == null) {
 			return;
@@ -437,8 +431,7 @@ public class Query<I> {
 		setParameters(stmt, filter, 1);
 	}
 
-	private int setParameters(PreparedStatement stmt, Filter filter,
-			int parameterIndex) throws SQLException {
+	private int setParameters(PreparedStatement stmt, Filter filter, int parameterIndex) throws SQLException {
 
 		Util.throwIfNull(stmt, "stmt");
 		Util.throwIfNull(filter, "filter");
@@ -470,8 +463,7 @@ public class Query<I> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void fillCollection(Collection<? super I> col, ResultSet rs)
-			throws SQLException {
+	private void fillCollection(Collection<? super I> col, ResultSet rs) throws SQLException {
 
 		Map<Object, Object> map = createMap(col);
 
@@ -490,9 +482,8 @@ public class Query<I> {
 				try {
 					item = createInstance(key);
 				} catch (Exception ex) {
-					throw new UnexpectedException("Unable to create an "
-							+ "object of type "
-							+ this.instanciationType.getName(), ex);
+					throw new UnexpectedException(
+							"Unable to create an " + "object of type " + this.instanciationType.getName(), ex);
 				}
 			}
 
@@ -519,8 +510,7 @@ public class Query<I> {
 
 	@SuppressWarnings("unchecked")
 	private <E extends I> E createInstance(Object itemId)
-			throws IllegalAccessException, InstantiationException,
-			InvocationTargetException {
+			throws IllegalAccessException, InstantiationException, InvocationTargetException {
 		QueryEvent<E> action = new QueryEvent<E>(this, null, itemId);
 		onCreating(action);
 		if (action.isCancelled()) {
@@ -540,19 +530,16 @@ public class Query<I> {
 		for (String column : descriptor.getColumns()) {
 			try {
 				String lcColumn = column.toLowerCase();
-				if (!column.equals(getPrimaryKey())
-						&& this.dataColumns.containsKey(lcColumn)) {
+				if (!column.equals(getPrimaryKey()) && this.dataColumns.containsKey(lcColumn)) {
 					String dbColumn = this.dataColumns.get(lcColumn);
 					descriptor.setValue(item, column, rs.getObject(dbColumn));
 				}
 			} catch (InvocationTargetException ex) {
 				throw new UnexpectedException(
-						"Unable to set [" + item + "] in [" + column
-								+ "]. Please see inner exceptions.", ex);
+						"Unable to set [" + item + "] in [" + column + "]. Please see inner exceptions.", ex);
 			} catch (IllegalAccessException ex) {
 				throw new UnexpectedException(
-						"Unable to set [" + item + "] in [" + column
-								+ "]. Please see inner exceptions.", ex);
+						"Unable to set [" + item + "] in [" + column + "]. Please see inner exceptions.", ex);
 			}
 		}
 	}
@@ -562,6 +549,9 @@ public class Query<I> {
 	 * gives the occasion to the user to take control of the object creation.
 	 * Using this event, it's possible to seek a cache for example. Override to
 	 * control the event propagation.
+	 * 
+	 * @param <E>
+	 *            The type of the object to be created.
 	 * 
 	 * @param action
 	 *            The action containing the event data.

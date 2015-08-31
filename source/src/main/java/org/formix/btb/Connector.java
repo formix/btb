@@ -100,6 +100,7 @@ public class Connector {
 	 * @return The connection on the default database.
 	 * 
 	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
 	public static Connection openConnection() throws SQLException {
 		return getInstance().open();
@@ -203,6 +204,7 @@ public class Connector {
 	 * @return a connection to the database.
 	 * 
 	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
 	public Connection open() throws SQLException {
 		if (!this.enabled) {

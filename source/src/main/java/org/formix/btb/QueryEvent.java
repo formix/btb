@@ -48,8 +48,12 @@ public class QueryEvent<I> extends EventObject {
 	 * 
 	 * @param source
 	 *            The Source of the event.
+	 * 
 	 * @param item
 	 *            The affected item.
+	 * 
+	 * @param itemId
+	 *            The itemId of the item.
 	 */
 	public QueryEvent(Object source, I item, Object itemId) {
 		super(source);

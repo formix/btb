@@ -33,14 +33,12 @@ import java.util.Set;
  * database. This object relational mapper is optimised to work with POJOs
  * respecting these behaviors:
  * </p>
- * <p>
  * <ol>
  * <li>The class must provide a public default (parameterless) constructor (but
  * you can define any constructor you wish thereafter).</li>
  * <li>The class must provide both read and write methods for each of its
  * properties (but they don't have to be public).</li>
  * </ol>
- * </p>
  * <p>
  * When an object is passed to any of the Bridge's insert, update, delete of
  * fill method, the object is assumed to be a persistable entity. The name of
@@ -73,12 +71,17 @@ public class Bridge<A> {
 	 * @param type
 	 *            The type of the class to be bridged.
 	 * 
+	 * @param ignoredProperties
+	 *            Optional array of strings telling the name of ignored
+	 *            properties for the given class A. Those properties will not be
+	 *            saved or loaded from database.
+	 * 
 	 * @return A Bridge instance.
 	 * 
 	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
-	public static <A> Bridge<A> create(Class<A> type,
-			String... ignoredProperties) throws SQLException {
+	public static <A> Bridge<A> create(Class<A> type, String... ignoredProperties) throws SQLException {
 		return new Bridge<A>(null, type, ignoredProperties);
 	}
 
@@ -95,12 +98,18 @@ public class Bridge<A> {
 	 * @param type
 	 *            The type of the class to be bridged.
 	 * 
+	 * @param ignoredProperties
+	 *            Optional array of strings telling the name of ignored
+	 *            properties for the given class A. Those properties will not be
+	 *            saved or loaded from database.
+	 * 
 	 * @return A Bridge instance.
 	 * 
 	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
-	public static <A> Bridge<A> create(Connection connection, Class<A> type,
-			String... ignoredProperties) throws SQLException {
+	public static <A> Bridge<A> create(Connection connection, Class<A> type, String... ignoredProperties)
+			throws SQLException {
 		return new Bridge<A>(connection, type, ignoredProperties);
 	}
 
@@ -111,10 +120,18 @@ public class Bridge<A> {
 	 * 
 	 * @param type
 	 *            The type of the class to be bridged.
+	 *            
+	 * @param ignoredProperties
+	 *            Optional array of strings telling the name of ignored
+	 *            properties for the given class A. Those properties will not be
+	 *            saved or loaded from database.
+	 * 
 	 * @see ConnectionManager
+	 * 
+	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
-	public Bridge(Class<A> type, String... ignoredProperties)
-			throws SQLException {
+	public Bridge(Class<A> type, String... ignoredProperties) throws SQLException {
 		Util.throwIfNull(type, "type");
 		initialize(null, type, ignoredProperties);
 	}
@@ -128,16 +145,23 @@ public class Bridge<A> {
 	 *            The connection to the database.
 	 * @param type
 	 *            The type of the class to be bridged.
+	 *            
+	 * @param ignoredProperties
+	 *            Optional array of strings telling the name of ignored
+	 *            properties for the given class A. Those properties will not be
+	 *            saved or loaded from database.
+	 * 
 	 * @see ConnectionManager
+	 * 
+	 * @throws SQLException
+	 *             Thrown when a problem occurs during SQL execution.
 	 */
-	public Bridge(Connection connection, Class<A> type,
-			String... ignoredProperties) throws SQLException {
+	public Bridge(Connection connection, Class<A> type, String... ignoredProperties) throws SQLException {
 		Util.throwIfNull(type, "type");
 		initialize(connection, type, ignoredProperties);
 	}
 
-	private void initialize(Connection connection, Class<A> type,
-			String[] ignoredProperties) throws SQLException {
+	private void initialize(Connection connection, Class<A> type, String[] ignoredProperties) throws SQLException {
 		this.connection = connection;
 		descriptor = SqlDescriptor.getInstance(type, ignoredProperties);
 		this.type = type;
@@ -147,8 +171,7 @@ public class Bridge<A> {
 		}
 	}
 
-	private Set<String> getReadOnlyColumns(String tableName)
-			throws SQLException {
+	private Set<String> getReadOnlyColumns(String tableName) throws SQLException {
 
 		Connection connection = this.connection;
 		boolean closeConn = false;
@@ -180,7 +203,7 @@ public class Bridge<A> {
 	/**
 	 * Gets the type bridged by the current object.
 	 * 
-	 * @return the type bridged.
+	 * @return the bridged type.
 	 */
 	public Class<A> getType() {
 		return type;
@@ -189,7 +212,7 @@ public class Bridge<A> {
 	/**
 	 * Gets the internal SqlDescriptor.
 	 * 
-	 * @return
+	 * @return the descriptor of the bridged type.
 	 */
 	protected SqlDescriptor getDescriptor() {
 		return descriptor;
@@ -248,6 +271,10 @@ public class Bridge<A> {
 	 * Create a query to select object of the current generic type into a
 	 * derived class type.
 	 * 
+	 * @param <I>
+	 *            The type of the returned objects from the query. This type
+	 *            must implement the base type A.
+	 * 
 	 * @param desiredType
 	 *            The derived class type to be used by the created query.
 	 * 
@@ -260,8 +287,7 @@ public class Bridge<A> {
 		return q;
 	}
 
-	private void setStatementValue(PreparedStatement stmt, int parameterIndex,
-			Object value) throws SQLException {
+	private void setStatementValue(PreparedStatement stmt, int parameterIndex, Object value) throws SQLException {
 		if (value != null) {
 			if (value instanceof Character) {
 				stmt.setObject(parameterIndex, value, Types.CHAR);
@@ -291,8 +317,8 @@ public class Bridge<A> {
 			connection = Connector.openConnection();
 		}
 
-		PreparedStatement stmt = connection.prepareStatement(
-				descriptor.getInsertQuery(), Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement stmt = connection.prepareStatement(descriptor.getInsertQuery(),
+				Statement.RETURN_GENERATED_KEYS);
 		setParameters(stmt, item);
 		stmt.executeUpdate();
 		fetchBackAutoKey(item, stmt.getGeneratedKeys());
@@ -303,15 +329,13 @@ public class Bridge<A> {
 		}
 	}
 
-	private int setParameters(PreparedStatement stmt, Object item)
-			throws SQLException {
+	private int setParameters(PreparedStatement stmt, Object item) throws SQLException {
 
 		int parameterIndex = 1;
 		for (String columnName : descriptor.getColumns()) {
 
 			if (descriptor.getReadOnlyColumns().contains(columnName)
-					|| this.descriptor.getIgnoredProperties().contains(
-							columnName)) {
+					|| this.descriptor.getIgnoredProperties().contains(columnName)) {
 				continue;
 			}
 
@@ -331,8 +355,7 @@ public class Bridge<A> {
 	}
 
 	// Supports only one auto generated key.
-	private void fetchBackAutoKey(Object item, ResultSet rs)
-			throws SQLException {
+	private void fetchBackAutoKey(Object item, ResultSet rs) throws SQLException {
 		if (rs.next() && (rs.getObject(1) != null)) {
 			String key = descriptor.getPrimaryKey();
 			Object value = rs.getObject(1);
@@ -351,9 +374,8 @@ public class Bridge<A> {
 		try {
 			descriptor.setValue(item, columnName, value);
 		} catch (Exception ex) {
-			throw new UnexpectedException("Unable to set [" + value + "] to "
-					+ "the property [" + columnName + "] for the type + "
-					+ item.getClass().getName() + ".", ex);
+			throw new UnexpectedException("Unable to set [" + value + "] to " + "the property [" + columnName
+					+ "] for the type + " + item.getClass().getName() + ".", ex);
 		}
 	}
 
@@ -375,8 +397,7 @@ public class Bridge<A> {
 			connection = Connector.openConnection();
 		}
 
-		PreparedStatement stmt = connection.prepareStatement(descriptor
-				.getUpdateQuery());
+		PreparedStatement stmt = connection.prepareStatement(descriptor.getUpdateQuery());
 		int parameterIndex = setParameters(stmt, item);
 		setStatementKey(stmt, parameterIndex, item);
 		stmt.executeUpdate();
@@ -387,8 +408,7 @@ public class Bridge<A> {
 		}
 	}
 
-	private void setStatementKey(PreparedStatement stmt, int parameterIndex,
-			Object item) throws SQLException {
+	private void setStatementKey(PreparedStatement stmt, int parameterIndex, Object item) throws SQLException {
 		Object value = descriptor.getValue(item, descriptor.getPrimaryKey());
 		setStatementValue(stmt, parameterIndex, value);
 		parameterIndex++;
@@ -412,8 +432,7 @@ public class Bridge<A> {
 			connection = Connector.openConnection();
 		}
 
-		PreparedStatement stmt = connection.prepareStatement(descriptor
-				.getDeleteQuery());
+		PreparedStatement stmt = connection.prepareStatement(descriptor.getDeleteQuery());
 		setStatementKey(stmt, 1, item);
 		stmt.executeUpdate();
 		stmt.close();

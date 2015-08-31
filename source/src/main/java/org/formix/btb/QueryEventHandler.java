@@ -22,11 +22,14 @@ package org.formix.btb;
  *            The type of the object on witch the query is operating on.
  */
 public interface QueryEventHandler<T> {
-    /**
-     * Handles a Query event.
-     * 
-     * @param qe
-     *            The query event informations.
-     */
-    public <E extends T> void handle(QueryEvent<E> qe);
+	/**
+	 * Handles a Query event.
+	 * 
+	 * @param <E>
+	 *            The type of the object from the QueryEvent.
+	 * 
+	 * @param qe
+	 *            The query event informations.
+	 */
+	public <E extends T> void handle(QueryEvent<E> qe);
 }
